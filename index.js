@@ -20,23 +20,23 @@ program.on('--help', function(){
 program.parse(process.argv);
 
 // Get custom configuration file path from argument
-let customConfigFile = program.config
+let customConfigFile = program.config || '';
+console.log(customConfigFile);
 
 // Load default Configuration
 let defaultConfig = require('./lib/config/');
 
-
 // Merge custom configuration and default configuration
 let config = defaultConfig;
-if (customConfigFile !== "") {
+if (customConfigFile.length > 0) {
   // Load custom cofiguration from file system.
   let customConfig = JSON.parse(fs.readFileSync(customConfigFile));
   config = _.assignIn({}, defaultConfig, customConfig);
 }
 
 // startup gateway
-let gateway =  require('./lib/gateway/')(config);
+let gateway =  require('./lib/gateway/')(config.gateway);
 
 // startup admin api
-let admin =  require('./lib/admin/')(config);
+let admin =  require('./lib/admin/')(config.admin);
 

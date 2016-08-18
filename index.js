@@ -1,5 +1,6 @@
 let fs = require('fs');
 let program = require('commander');
+let _ = require('lodash');
 
 
 // Set Application's useage
@@ -24,14 +25,14 @@ let customConfigFile = program.config
 // Load default Configuration
 let defaultConfig = require('./lib/config/');
 
-// Load custom cofiguration from file system.
-//let customConfig = JSON.parse(fs.readFileSync(customConfigFile));
 
 // Merge custom configuration and default configuration
-//let config = defaultConfig;
-//if (customConfigFile !== "") {
-//  config = Object.assign(config
-//}
+let config = defaultConfig;
+if (customConfigFile !== "") {
+  // Load custom cofiguration from file system.
+  let customConfig = JSON.parse(fs.readFileSync(customConfigFile));
+  config = _.assignIn({}, defaultConfig, customConfig);
+}
 
 // startup gateway
 let gateway =  require('./lib/gateway/')(config);

@@ -22,6 +22,7 @@
   "homepage": "https://github.com/hashmaparraylist/HengHa#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "http-proxy": "^1.14.0",
     "kcors": "^1.2.1",
     "koa": "^1.2.1",
     "koa-basic-auth": "^1.1.2",

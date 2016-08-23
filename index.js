@@ -34,9 +34,12 @@ if (customConfigFile.length > 0) {
   config = _.assignIn({}, defaultConfig, customConfig);
 }
 
-// startup gateway
-let gateway =  require('./lib/gateway/')(config.gateway);
+// Set config into Global namespace
+global.adminConfig = config.admin;
+global.gatewayConfig = config.gateway;
 
+// startup gateway
+let gateway =  require('./lib/gateway/')();
 // startup admin api
-let admin =  require('./lib/admin/')(config.admin);
+let admin =  require('./lib/admin/')();
 

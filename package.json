@@ -26,8 +26,10 @@
     "kcors": "^1.2.1",
     "koa": "^1.2.1",
     "koa-basic-auth": "^1.1.2",
+    "koa-bodyparser": "^2.2.0",
     "koa-router": "^5.4.0",
     "lodash": "^4.15.0",
+    "uuid": "^2.0.2",
     "winston": "^2.2.0"
   }
 }

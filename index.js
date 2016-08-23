@@ -35,8 +35,7 @@ if (customConfigFile.length > 0) {
 }
 
 // Set config into Global namespace
-global.adminConfig = config.admin;
-global.gatewayConfig = config.gateway;
+global.config = config;
 
 // startup gateway
 let gateway =  require('./lib/gateway/')();

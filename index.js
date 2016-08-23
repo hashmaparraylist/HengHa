@@ -1,7 +1,10 @@
+// Node.js Modules
 let fs = require('fs');
+let path = require('path');
+
+// Third Party Modules
 let program = require('commander');
 let _ = require('lodash');
-
 
 // Set Application's useage
 program.version('0.1.0')
@@ -34,6 +37,8 @@ if (customConfigFile.length > 0) {
   config = _.assignIn({}, defaultConfig, customConfig);
 }
 
+// Resolve relative path to absolute path
+config.data.file = path.resolve(config.data.file);
 // Set config into Global namespace
 global.config = config;
 

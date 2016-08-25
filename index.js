@@ -27,6 +27,9 @@ program.parse(process.argv);
 
 // Get custom configuration file path from argument
 let customConfigFile = program.config || '';
+if (customConfigFile.length > 0) {
+  customConfigFile = path.resolve(__dirname, customConfigFile);
+}
 
 // Get application config
 let config = configLoader.getConfig(customConfigFile);

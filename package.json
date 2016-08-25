@@ -4,7 +4,8 @@
   "description": "A simple API gateway based node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Warn: no test specified\" && exit 1"
+    "test": "mocha --reporter spec --bail --check-leaks ./test/",
+    "test-watch": "mocha --watch --reporter spec --bail --check-leaks ./test/"
   },
   "repository": {
     "type": "git",
@@ -32,5 +33,12 @@
     "lodash": "^4.15.0",
     "uuid": "^2.0.2",
     "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2",
+    "should": "^11.1.0"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
   }
 }

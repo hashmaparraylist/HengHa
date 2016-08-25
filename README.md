@@ -4,7 +4,7 @@
 
 > 当前进度: v0.1.0版开发中
 
-[![Build Status](https://travis-ci.org/hashmaparraylist/HengHa.svg?branch=v0.1.0%2Fmaster)](https://travis-ci.org/hashmaparraylist/HengHa) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Build Status](https://travis-ci.org/hashmaparraylist/HengHa.svg?branch=v0.1.0%2Fmaster)](https://travis-ci.org/hashmaparraylist/HengHa) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/) [![codecov](https://codecov.io/gh/hashmaparraylist/HengHa/branch/master/graph/badge.svg)](https://codecov.io/gh/hashmaparraylist/HengHa)
 
 ## 目录
 

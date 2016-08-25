@@ -7,5 +7,6 @@ notifications:
     on_success: never
     on_failure: never
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+after_script:
+  - npm install codecov
+  - ./node_modules/.bin/codecov

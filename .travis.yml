@@ -10,3 +10,9 @@ notifications:
 after_script:
   - npm install codecov
   - ./node_modules/.bin/codecov
+
+# safelist
+branches:
+  only:
+  - master
+  - v0.1.0/master

@@ -42,6 +42,8 @@ global.config = config;
 
 // startup gateway
 let gateway =  require('./lib/gateway/')();
-// startup admin api
-let admin =  require('./lib/admin/')();
 
+// startup admin api
+let adminEndpoint =  require('./lib/admin/');
+adminEndpoint.init(config.admin, require('./lib/logger/').get('admin', config.admin.logger));
+adminEndpoint.startup();

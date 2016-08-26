@@ -33,6 +33,9 @@ if (customConfigFile.length > 0) {
 
 // Get application config
 let config = configLoader.getConfig(customConfigFile);
+config.data.file = path.resolve(__dirname, config.data.file);
+// Generate Data file from config
+config = configLoader.generateDataFile(config);
 
 // Set config into Global namespace
 global.config = config;

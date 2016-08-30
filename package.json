@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks ./test/",
-    "test-watch": "mocha --watch --reporter spec --bail --check-leaks ./test/"
+    "test-watch": "mocha --watch --reporter tap --bail --check-leaks ./test/"
   },
   "repository": {
     "type": "git",

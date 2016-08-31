@@ -298,6 +298,13 @@ describe('fileSchema module', () => {
         done(error);
       });
     });
+
+    it('not match a location without last slash #1', (done) => {
+      apiSchema.matcher('/demo100', (error, data) => {
+        assert.equal(data, null);
+        done(error);
+      });
+    });
   });
 
 });

@@ -41,7 +41,9 @@ config = configLoader.generateDataFile(config);
 global.config = config;
 
 // startup gateway
-let gateway =  require('./lib/gateway/')();
+let gateway =  require('./lib/gateway/');
+gateway.init(config, require('./lib/logger/').get('gateway', config.gateway.logger));
+gateway.startup();
 
 // startup admin api
 let adminEndpoint =  require('./lib/admin/');

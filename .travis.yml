@@ -9,6 +9,8 @@ notifications:
 
 after_script:
   - npm install codecov
+  - npm install istanbul
+  - ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha ./test/ 
   - ./node_modules/.bin/codecov
 
 # safelist

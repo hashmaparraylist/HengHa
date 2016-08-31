@@ -4,8 +4,9 @@
   "description": "A simple API gateway based node.js",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec --bail --check-leaks ./test/",
-    "test-watch": "mocha --watch --reporter tap --bail --check-leaks ./test/"
+    "test": "mocha --check-leaks ./test/",
+    "test-watch": "mocha --watch --reporter tap --check-leaks ./test/",
+    "test-travis": "istanbul cover ./node_modules/.bin/mocha ./test/"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "rewire": "^2.5.2",
     "should": "^11.1.0",

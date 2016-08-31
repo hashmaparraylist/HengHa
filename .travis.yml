@@ -7,11 +7,9 @@ notifications:
     on_success: never
     on_failure: never
 
-script:
-  - npm run test-travis
-
 after_script:
   - npm install codecov
+  - npm run test-travis
   - ./node_modules/.bin/codecov
 
 # safelist

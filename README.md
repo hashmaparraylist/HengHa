@@ -8,7 +8,7 @@
 * [安装](#安装)
 * [启动](#启动)
 * [配置](#配置)
-* [管理API](#管理API)
+* [管理端API](#管理端api)
 
 ## 安装
 
@@ -40,27 +40,19 @@ node index.js -c config.json
 
   // Gateway端配置
   "gateway": {
-    // 端口
     "port": 1981,
-
-    // Gateway端的log输出等级
     "logger": {
-      "level": "debug"
+      "level": "debug" 
     }
   },
 
   // 管理端配置
   "admin": {
-    // 端口
     "port": 2016,
-    
-    // Basic认证的用户名和密码
-    "authorization": {
+    "authorization": {      
       "user": "admin",
       "password": "admin"
     },
-
-    // Gateway端的log输出等级
     "logger": {
       "level": "debug"
     }

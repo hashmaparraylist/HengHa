@@ -4,7 +4,9 @@
   "description": "A simple API gateway based node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Warn: no test specified\" && exit 0"
+    "test": "mocha --check-leaks ./test/",
+    "test-watch": "mocha --watch --reporter tap --check-leaks ./test/",
+    "test-travis": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,27 @@
   },
   "homepage": "https://github.com/hashmaparraylist/HengHa#readme",
   "dependencies": {
+    "async": "^2.0.1",
+    "commander": "^2.9.0",
+    "http-proxy": "^1.14.0",
+    "kcors": "^1.2.1",
     "koa": "^1.2.1",
-    "koa-router": "^5.4.0"
+    "koa-basic-auth": "^1.1.2",
+    "koa-bodyparser": "^2.2.0",
+    "koa-router": "^5.4.0",
+    "lodash": "^4.15.0",
+    "uuid": "^2.0.2",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "rewire": "^2.5.2",
+    "should": "^11.1.0",
+    "sinon": "^1.17.5"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
   }
 }

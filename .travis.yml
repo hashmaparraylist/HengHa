@@ -5,3 +5,15 @@ node_js:
 notifications:
   email:
     on_success: never
+    on_failure: never
+
+after_script:
+  - npm install codecov
+  - npm run test-travis
+  - ./node_modules/.bin/codecov
+
+# safelist
+branches:
+  only:
+  - master
+  - v0.1.0/master

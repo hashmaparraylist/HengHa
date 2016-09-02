@@ -226,18 +226,18 @@ curl -v \
 
 ```
 # Request
-> DELETE /api/85581f40-70e7-11e6-85e3-674d3ab2db19 HTTP/1.1
-> Host: localhost:2016
-> User-Agent: curl/7.43.0
-> Accept: */*
-> Authorization:Basic YWRtaW46YWRtaW4=
+DELETE /api/85581f40-70e7-11e6-85e3-674d3ab2db19 HTTP/1.1
+Host: localhost:2016
+User-Agent: curl/7.43.0
+Accept: */*
+Authorization:Basic YWRtaW46YWRtaW4=
 
 # Response
-< HTTP/1.1 200 OK
-< Content-Type: application/json; charset=utf-8
-< Content-Length: 535
-< Date: Fri, 02 Sep 2016 09:00:19 GMT
-< Connection: keep-alive
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Length: 535
+Date: Fri, 02 Sep 2016 09:00:19 GMT
+Connection: keep-alive
 
 # Response Body
 [  

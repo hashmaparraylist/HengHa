@@ -1,13 +1,16 @@
 let chai = require('chai');
 let sinon = require('sinon');
+let superagent = require('superagent');
+let async = require('async');
+let constErrorMessage  = require('../lib/errors');
 
 let rewire = require('rewire');
 let assert = chai.assert;
 
 // Mock
 let loggerMock = {
-  debug: function() {},
-  info: function() {},
+  debug: function(msg) {},
+  info: function(msg) {},
   error: function() {},
 };
 
@@ -18,35 +21,57 @@ let interfaceMock = {
       get: {
         path: '/get',
         method: 'get',
-        generator: function*(next) {}
+        generator: function*(next) {
+          this.body = 'hello, world!'
+        }
+      },
+      getError: {
+        path: '/getError',
+        method: 'get',
+        generator: function*(next) {
+          this.throw();
+        }
       },
       create: {
         path: '/post',
         method: 'post',
-        generator: function*(next) {}
+        generator: function*(next) {
+          this.body = 'hello, world!'
+        }
       },
       update: {
         path: '/put',
         method: 'put',
-        generator: function*(next) {}
+        generator: function*(next) {
+          this.body = 'hello, world!'
+        }
       },
       delete: {
         path: '/delete',
         method: 'delete',
-        generator: function*(next) {}
+        generator: function*(next) {
+          this.body = 'hello, world!'
+        }
       },
       option: {
         path: '/option',
         method: 'options',
-        generator: function*(next) {}
+        generator: function*(next) {
+          this.body = 'hello, world!'
+        }
       }
     }
   }
 };
 
 let appMock = {
+  middlewares: [],
   use: function(callback) {
-    callback();
+    if (callback.constructor.name === 'GeneratorFunction') {
+      this.middlewares.push(callback);
+    } else {
+      callback();
+    }
     return this;
   },
   on: function(category, callback) {
@@ -54,7 +79,11 @@ let appMock = {
   },
   listen: function(port, callback) {
     callback();
-  }
+  },
+  app: {
+    emit: function() {}
+  },
+  throw: function() {}
 };
 
 // Test Data
@@ -85,6 +114,7 @@ describe('admin module', () => {
     beforeEach(() => {
       target = rewire('../lib/admin/index.js');
       target.init(config, loggerMock);
+      appMock.generators = [];
     });
 
     it('test routerSetting and app.listen', () => {
@@ -146,6 +176,55 @@ describe('admin module', () => {
         pass: config.admin.authorization.password
       }), 'called with argument');
     
+    });
+
+    it('test main', (done) => {
+      target.__set__('routerSetting', interfaceMock);
+      target.startup();
+      async.waterfall([function(callback) {
+        superagent
+          .get('http://localhost:1234/get')
+          .set('Authorization', 'Basic dXNyOnBhc3N3ZA==')
+          .set('Accept', '*/*')
+          .end(function(error, response) {
+            assert.isNull(error, 'test main on 200 / assert status');
+            assert.equal(response.text, 'hello, world!', 'test main on 200 / assert body');
+            callback();
+          });
+      }, function(callback) {
+        superagent
+          .get('http://localhost:1234/getError')
+          .set('Authorization', 'Basic dXNyOnBhc3N3ZA==')
+          .set('Accept', '*/*')
+          .end(function(error, response) {
+            assert.equal(error.status, 500, 'test main on 500 / assert status');
+            callback();
+          });
+
+      }, function(callback) {
+        superagent
+          .get('http://localhost:1234/user')
+          .set('Authorization', 'Basic dXNyOnBhc3N3ZA==')
+          .end((error, response) => {
+            assert.equal(error.status, 404, 'test main on 404 / assert status');
+            assert.deepEqual(response.body, {
+              error: constErrorMessage.NOT_FOUND
+            }, 'test main on 404 / assert body');
+            callback();
+          });
+      }, function(callback) {
+        superagent
+          .get('http://localhost:1234/get')
+          .end((error, response) => {
+            assert.equal(error.status, 401, 'test main on 401 / assert status');
+            assert.deepEqual(response.body, {
+              error: constErrorMessage.UN_AUTHORIZED
+            }, 'test main on 401 / assert body');
+            callback();
+          });
+      }], function(error) {
+        done();
+      });
     });
   });
 });

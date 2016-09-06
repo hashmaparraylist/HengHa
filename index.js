@@ -37,9 +37,6 @@ config.data.file = path.resolve(__dirname, config.data.file);
 // Generate Data file from config
 config = configLoader.generateDataFile(config);
 
-// Set config into Global namespace
-global.config = config;
-
 // startup gateway
 let gateway =  require('./lib/gateway/');
 gateway.init(config, require('./lib/logger/').get('gateway', config.gateway.logger));

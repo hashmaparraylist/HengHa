@@ -1,6 +1,6 @@
 {
   "name": "hengha",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple API gateway based node.js",
   "main": "index.js",
   "scripts": {
@@ -41,7 +41,8 @@
     "mocha": "^3.0.2",
     "rewire": "^2.5.2",
     "should": "^11.1.0",
-    "sinon": "^1.17.5"
+    "sinon": "^1.17.5",
+    "superagent": "^2.2.0"
   },
   "engines": {
     "node": ">= 6.0.0"

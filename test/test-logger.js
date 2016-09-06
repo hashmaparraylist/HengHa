@@ -7,9 +7,12 @@ let logger = rewire('../lib/logger/index.js');
 
 let winstonMock = {
   loggers: {
-    add: function(category, config) {},
+    categories: [],
+    add: function(category, config) {
+      this.categories[category] = config;
+    },
     get: function(category) {
-      return category;
+      return this.categories[category];
     }
   }
 };
@@ -27,8 +30,19 @@ describe('logger module', () => {
         level: 'debug'
       });
 
-      assert.equal(category, 'test');
       assert.isOk(spy.calledOnce);
+      assert.equal(category.console.level, 'debug');
+      expect(category.console.timestamp()).to.be.a('Date');
+      let data = category.console.formatter({
+        timestamp: function() {
+          return new Date();
+        },
+        level: 'debug',
+        message: 'test',
+        meta: 'test2'
+      });
+
+      expect(data).to.be.a('string');
 
       spy.reset();
 

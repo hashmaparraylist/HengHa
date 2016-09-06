@@ -207,6 +207,13 @@ describe('fileSchema module', () => {
       });
     });
 
+    it('Update not exists data', (done) => {
+      apiSchema.update('1231231231', { location: '/test2/' })((error, data) => {
+        assert.sameDeepMembers(data, originData());
+        done(error);
+      });
+    });
+
     afterEach(() => {
       stubData = originData();
     });

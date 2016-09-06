@@ -9,8 +9,8 @@ let assert = chai.assert;
 
 // Mock
 let loggerMock = {
-  debug: function(msg) {},
-  info: function(msg) {},
+  debug: function() {},
+  info: function() {},
   error: function() {},
 };
 

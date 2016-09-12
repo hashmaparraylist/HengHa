@@ -49,9 +49,19 @@ describe('matcher module', () => {
       assert.equal(result.proxyPass, 'http://ac.com');
     });
 
+    it('find location by /acd ', () => {
+      let result = target.matcher('/acd', apis);
+      assert.equal(result.proxyPass, 'http://ac.com');
+    });
+
     it('find location by /ab', () => {
       let result = target.matcher('/ab', apis);
       assert.equal(result.proxyPass, 'http://ab.com');
+    });
+
+    it('find location by /abd', () => {
+      let result = target.matcher('/abd', apis);
+      assert.equal(result.proxyPass, 'http://abd.com');
     });
 
     it('find location by /ck', () => {
@@ -72,6 +82,22 @@ describe('matcher module', () => {
     it('find location by /cK/p', () => {
       let result = target.matcher('/cK/p', apis);
       assert.equal(result.proxyPass, 'http://ck.com');
+    });
+    it('find location by /de', () => {
+      let result = target.matcher('/de', apis);
+      assert.equal(result.proxyPass, 'http://de.com');
+    });
+    it('find location by /dea', () => {
+      let result = target.matcher('/dea', apis);
+      assert.equal(result.proxyPass, 'http://de.com');
+    });
+    it('find location by /de/a', () => {
+      let result = target.matcher('/de/a', apis);
+      assert.equal(result.proxyPass, 'http://de.com');
+    });
+    it('find location by /dE', () => {
+      let result = target.matcher('/dE', apis);
+      assert.isNull(result);
     });
   });
 });

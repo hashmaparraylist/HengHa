@@ -16,9 +16,6 @@ let apis = [{
   location: '/b', 
   proxy_pass: 'http://b.com'
 }, {
-  location: '/d', 
-  proxy_pass: 'http://d.com'
-}, {
   location: '^~ /abd', 
   proxy_pass: 'http://abd.com'
 }, {
@@ -70,7 +67,7 @@ describe('matcher module', () => {
     });
 
     it('find location by /CK', () => {
-      let result = target.matcher('/ck', apis);
+      let result = target.matcher('/CK', apis);
       assert.equal(result.proxyPass, 'http://ck.com');
     });
 
@@ -97,6 +94,10 @@ describe('matcher module', () => {
     });
     it('find location by /dE', () => {
       let result = target.matcher('/dE', apis);
+      assert.isNull(result);
+    });
+    it('find location by /DE', () => {
+      let result = target.matcher('/DE', apis);
       assert.isNull(result);
     });
   });

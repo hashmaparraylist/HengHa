@@ -278,40 +278,21 @@ describe('fileSchema module', () => {
       apiSchema.init(expectedPath);
     });
 
-    it('match a location with last slash #1', (done) => {
-      apiSchema.matcher('/demo1/', (error, data) => {
-        assert.equal(data.proxy_pass, 'http://test.com/');
-        done(error);
+    it('match a location', (done) => {
+
+      let matcherMock = {
+        matcher: function() {}
+      };
+      let spy = sinon.spy(matcherMock, 'matcher');
+
+      apiSchema.__set__('ngxMatcher', matcherMock);
+      apiSchema.matcher('/abc/', (error, result) => {
+        assert.isOk(spy.calledOnce);
+        assert.isOk(spy.calledWithMatch('/abc/'));
+        done();
       });
     });
 
-    it('match a location with last slash #2', (done) => {
-      apiSchema.matcher('/demo3/', (error, data) => {
-        assert.equal(data.proxy_pass, 'http://test3.com/');
-        done(error);
-      });
-    });
-
-    it('match a location without last slash #1', (done) => {
-      apiSchema.matcher('/demo2', (error, data) => {
-        assert.equal(data.proxy_pass, 'http://test2.com/');
-        done(error);
-      });
-    });
-
-    it('match a location without last slash #1', (done) => {
-      apiSchema.matcher('/demo4', (error, data) => {
-        assert.equal(data.proxy_pass, 'http://test4.com/');
-        done(error);
-      });
-    });
-
-    it('not match a location', (done) => {
-      apiSchema.matcher('/demo9', (error, data) => {
-        assert.equal(data, null);
-        done(error);
-      });
-    });
   });
 
 });

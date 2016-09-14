@@ -16,7 +16,7 @@ let apis = [{
   location: '/b', 
   proxy_pass: 'http://b.com'
 }, {
-  location: '^~ /abd', 
+  location: '^~ /abd/', 
   proxy_pass: 'http://abd.com'
 }, {
   location: '~* /ck', 
@@ -39,11 +39,13 @@ describe('matcher module', () => {
     it('find location by /ac ', () => {
       let result = target.matcher('/ac', apis);
       assert.equal(result.proxyPass, 'http://regex_ac.com');
+      assert.equal(result.request_uri, '/');
     });
 
     it('find location by /ac/d ', () => {
       let result = target.matcher('/ac/d', apis);
       assert.equal(result.proxyPass, 'http://ac.com');
+      assert.equal(result.request_uri, '//d');
     });
 
     it('find location by /acd ', () => {
@@ -51,13 +53,13 @@ describe('matcher module', () => {
       assert.equal(result.proxyPass, 'http://ac.com');
     });
 
-    it('find location by /ab', () => {
-      let result = target.matcher('/ab', apis);
+    it('find location by /abd', () => {
+      let result = target.matcher('/abd', apis);
       assert.equal(result.proxyPass, 'http://ab.com');
     });
 
-    it('find location by /abd', () => {
-      let result = target.matcher('/abd', apis);
+    it('find location by /abd/', () => {
+      let result = target.matcher('/abd/', apis);
       assert.equal(result.proxyPass, 'http://abd.com');
     });
 
@@ -74,11 +76,13 @@ describe('matcher module', () => {
     it('find location by /Ck', () => {
       let result = target.matcher('/Ck', apis);
       assert.equal(result.proxyPass, 'http://ck.com');
+      assert.equal(result.request_uri, '/');
     });
 
     it('find location by /cK/p', () => {
       let result = target.matcher('/cK/p', apis);
       assert.equal(result.proxyPass, 'http://ck.com');
+      assert.equal(result.request_uri, '//p');
     });
     it('find location by /de', () => {
       let result = target.matcher('/de', apis);

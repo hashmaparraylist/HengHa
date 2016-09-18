@@ -94,7 +94,7 @@ describe('gateway module', () => {
       gateway.startup();
 
       let req = {
-        url : '/demo1/test'
+        url : 'http://localhost/demo1/test'
       };
       let res = {
       };
@@ -110,13 +110,12 @@ describe('gateway module', () => {
       // schema's matcher method
       assert.isOk(spySchemaMatcher.calledOnce, 
           'schema\'s matcher be called once');
-      assert.isOk(spySchemaMatcher.calledWithMatch(req.url), 
+      assert.equal(spySchemaMatcher.args[0][0], '/demo1/test', 
           'schema\'s matcher be called with params');
 
       // proxy's web method 
       assert.isOk(spyProxyWeb.calledOnce, 'proxy\'s web is called once');
-      req.url = 'test';
-      assert.isOk(spyProxyWeb.calledWith(req, res, {target: proxySite.proxy_pass}),
+      assert.isOk(spyProxyWeb.calledWithMatch({ url: undefined }, res, {target: proxySite.proxy_pass}),
         'proxy\'s web is called once with params');
     });
 

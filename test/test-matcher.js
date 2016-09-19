@@ -1,5 +1,6 @@
 let chai = require('chai');
 let assert = chai.assert;
+let expect = chai.expect;
 
 let target = require('../lib/matcher/');
 
@@ -16,6 +17,12 @@ let apis = [{
   location: '/b', 
   proxy_pass: 'http://b.com'
 }, {
+  location: '/ba', 
+  proxy_pass: 'http://b.com'
+}, {
+  location: '/bd', 
+  proxy_pass: 'http://b.com'
+}, {
   location: '^~ /abd/', 
   proxy_pass: 'http://abd.com'
 }, {
@@ -30,7 +37,48 @@ let apis = [{
 }];
 
 describe('matcher module', () => {
+  describe('#matcher() error handle', () => {
+    it('unsupport regex location', () => {
+      let error = target.matcher('/b', [{
+        location: '~@ /hello/',
+        proxy_pass: 'http://test.com'
+      }]);
+
+      expect(error).to.be.an('error');
+    });
+
+    it('too many location argument', () => {
+      let error = target.matcher('/b', [{
+        location: '~@ ~ /hello/',
+        proxy_pass: 'http://test.com'
+      }]);
+      expect(error).to.be.an('error');
+    });
+
+  });
   describe('#matcher()', () => {
+    it('find location in one element array', () => {
+      let result = target.matcher('/b', [{
+        location: '^~ /b/',
+        proxy_pass: 'http://test.com'
+      }]);
+      expect(result).to.not.an('error');
+    });
+
+    it('find location in two element array', () => {
+      let result = target.matcher('/b', [{
+        location: '/b',
+        proxy_pass: 'http://test.com'
+      }, {
+        location: '/a',
+        proxy_pass: 'http://test.com'
+      }, {
+        location: '/c',
+        proxy_pass: 'http://test.com'
+      }]);
+      expect(result).to.not.an('error');
+    });
+
     it('find location by /b ', () => {
       let result = target.matcher('/b', apis);
       assert.equal(result.proxyPass, 'http://b.com');
